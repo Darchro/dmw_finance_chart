@@ -50,9 +50,8 @@ class Chart
                 var item1_value = $(this).val();
                 $("#item2").append('<option></option>');
                 for(var item in data[item1_value]){
-                  $("#item3").append('<option></option>');
-                  var option = $('<option/>');
                   if(item != "x_data"){
+                    var option = $('<option/>');
                     option.attr({ 'value': item }).text(item);
                     $("#item2").append(option);
                   }
@@ -138,10 +137,7 @@ class Chart
                                 color: Highcharts.getOptions().colors[1]
                             }
                         },
-                        opposite: true,
-                        linkedTo: 0,
-                        min:-10,
-                        max:10
+                        opposite: true
                     }],
                     tooltip: {
                         shared: true
