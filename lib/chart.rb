@@ -86,7 +86,7 @@ class Chart
                   console.log(item);
                   item_value = data[key1][key2][key3][item]
                   if(item.indexOf('增长率') != -1){
-                    series_data.push({name: item, type: 'column', yAxis: 1,data: item_value})
+                    series_data.push({name: item, type: 'column', yAxis: 1,data: item_value, tooltip: {valueSuffix: '%'}})
                   }else{
                     series_data.push({name: item, type: 'spline', yAxis: 0,data: item_value})
                   }
@@ -132,7 +132,7 @@ class Chart
                             }
                         },
                         labels: {
-                            format: '{value}',
+                            format: '{value} %',
                             style: {
                                 color: Highcharts.getOptions().colors[1]
                             }
