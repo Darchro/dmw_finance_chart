@@ -48,7 +48,7 @@ class ChartsApp < Sinatra::Base
         t2 = row_data[1] #类目二名称
         data_hash[sheet_name][t1][t2] = {} unless data_hash[sheet_name][t1].has_key?(t2)
         year = row_data[2] #数据所属年份
-        year_data = year.include?('增长率') ? row_data[3, 12].collect{|data| (data * 100).round(2) rescue nil} : row_data[3, 12].collect{|data| data.round(2) rescue nil}
+        year_data = (year.include?('增长率') || year.include?('占比')) ? row_data[3, 12].collect{|data| (data * 100).round(2) rescue nil} : row_data[3, 12].collect{|data| data.round(2) rescue nil}
         data_hash[sheet_name][t1][t2][year] = year_data
       end
     end
