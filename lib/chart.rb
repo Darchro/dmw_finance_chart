@@ -85,7 +85,7 @@ class Chart
                 for(var item in data[key1][key2][key3]){
                   console.log(item);
                   item_value = data[key1][key2][key3][item]
-                  if(item.indexOf('增长率') != -1 || item.indexOf('占比') != -1){
+                  if(item.indexOf('增长率') != -1 || item.indexOf('占销售额比') != -1){
                     series_data.push({name: item, type: 'column', yAxis: 1,data: item_value, tooltip: {valueSuffix: '%'}})
                   }else{
                     series_data.push({name: item, type: 'spline', yAxis: 0,data: item_value})

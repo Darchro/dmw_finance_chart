@@ -17,17 +17,18 @@ class ChartsApp < Sinatra::Base
     file_name = params[:file][:filename]
     file = params[:file][:tempfile]
 
-    File.open("./public/download_tmp/#{file_name}", 'wb') do |f|
+    tmp_file_name = "#{Date.today.to_s}_#{file_name}"
+    File.open("./public/download_tmp/#{tmp_file_name}", 'wb') do |f|
       f.write(file.read)
     end
 
     #处理数据
-    @data = xls_parse(file_name)
+    @data = xls_parse(tmp_file_name)
     
     #生成一个html文件
-    render_chart(@data, file_name)
+    render_chart(@data, tmp_file_name)
 
-    send_file "./public/download_tmp/#{file_name.split('.').first}.html", :filename => "#{file_name.split('.').first}.html", :type => 'Application/octet-stream'
+    send_file "./public/download_tmp/#{tmp_file_name.split('.').first}.html", :filename => "#{tmp_file_name.split('.').first}.html", :type => 'Application/octet-stream'
   end
 
   private
@@ -48,7 +49,7 @@ class ChartsApp < Sinatra::Base
         t2 = row_data[1] #类目二名称
         data_hash[sheet_name][t1][t2] = {} unless data_hash[sheet_name][t1].has_key?(t2)
         year = row_data[2] #数据所属年份
-        year_data = (year.include?('增长率') || year.include?('占比')) ? row_data[3, 12].collect{|data| (data * 100).round(2) rescue nil} : row_data[3, 12].collect{|data| data.round(2) rescue nil}
+        year_data = (year.include?('增长率') || year.include?('占销售额比')) ? row_data[3, 12].collect{|data| (data * 100).round(2) rescue nil} : row_data[3, 12].collect{|data| data.round(2) rescue nil}
         data_hash[sheet_name][t1][t2][year] = year_data
       end
     end
